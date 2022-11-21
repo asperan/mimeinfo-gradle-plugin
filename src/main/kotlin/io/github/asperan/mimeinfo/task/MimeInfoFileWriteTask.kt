@@ -8,6 +8,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 package io.github.asperan.mimeinfo.task
 
+import io.github.asperan.helper.XML_HEADER
 import io.github.asperan.mimeinfo.extension.MimeInfoExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -29,6 +30,6 @@ open class MimeInfoFileWriteTask : DefaultTask() {
                     .projectDir
                     .resolve(file)
                     .apply { createNewFile() }
-                    .writeText(mimeInfoSpecs.toXmlString(indentLevel = 0u))
+                    .writeText("${XML_HEADER}\n${mimeInfoSpecs.toXmlString(indentLevel = 0u)}")
             }
 }
