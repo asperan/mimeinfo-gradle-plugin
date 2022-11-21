@@ -16,11 +16,13 @@ class MimeInfoContext : Context<MimeInfoSpecs> {
      * @param typeName The name of the type.
      * @param configuration The configuration of the mime type.
      */
-    fun mimetype(typeClass: MimeTypeSpecs.Type.MimeClass, typeName: String, configuration: MimeTypeContext.() -> Unit) {
-        val mimeTypeContext = MimeTypeContext(typeClass, typeName)
-        mimeTypeContext.configuration()
-        mimeInfoSpecsBuilder.addMimeType(mimeTypeContext.build())
-    }
+    fun mimetype(
+        typeClass: MimeTypeSpecs.Type.MimeClass,
+        typeName: String,
+        configuration: MimeTypeContext.() -> Unit,
+    ): Unit = MimeTypeContext(typeClass, typeName)
+            .also { it.configuration() }
+            .let { mimeInfoSpecsBuilder.addMimeType(it.build()) }
 
     override fun build(): MimeInfoSpecs = mimeInfoSpecsBuilder.build()
 }
