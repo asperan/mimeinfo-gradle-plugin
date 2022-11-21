@@ -12,6 +12,8 @@ class MimeInfoContext : Context<MimeInfoSpecs> {
     /**
      * Add a mimetype to the mimeinfo of the context.
      *
+     * @param typeClass The class of the MimeType.
+     * @param typeName The name of the type.
      * @param configuration The configuration of the mime type.
      */
     fun mimetype(typeClass: MimeTypeSpecs.Type.MimeClass, typeName: String, configuration: MimeTypeContext.() -> Unit) {
