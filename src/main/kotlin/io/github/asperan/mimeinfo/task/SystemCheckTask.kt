@@ -35,7 +35,7 @@ open class SystemCheckTask : DefaultTask() {
     fun isSystemSupported() {
         val currentSystem = System.getProperty("os.name")
         check(supportedSystems.get().contains(currentSystem)) {
-            "The current system '${currentSystem}' is not supported.\n" +
+            "The current system '$currentSystem' is not supported.\n" +
                 "Supported systems:\n${supportedSystems.get().joinToString("\n") { "- $it" }}"
         }
     }
