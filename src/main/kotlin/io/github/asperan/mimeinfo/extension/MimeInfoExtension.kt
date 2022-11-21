@@ -31,9 +31,7 @@ open class MimeInfoExtension {
      * @param fileName The temporary file name where to save the MimeInfo specification.
      * @param configuration The configuration to be called on the MimeInfo context.
      */
-    fun mimeinfo(fileName: String, configuration: MimeInfoContext.() -> Unit) {
-        val mimeInfoContext = MimeInfoContext()
-        mimeInfoContext.configuration()
-        mimeInfoFiles = mimeInfoFiles + (File(fileName) to mimeInfoContext.build())
-    }
+    fun mimeinfo(fileName: String, configuration: MimeInfoContext.() -> Unit) = MimeInfoContext()
+        .also { it.configuration() }
+        .let { mimeInfoFiles = mimeInfoFiles + (File(fileName) to it.build()) }
 }
