@@ -8,7 +8,10 @@ import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
  * @param typeClass The class of the Mime type.
  * @param typeName The name of the type.
  */
-class MimeTypeContext(typeClass: MimeTypeSpecs.Type.MimeClass, typeName: String) : Context<MimeTypeSpecs> {
+class MimeTypeContext(
+    typeClass: MimeTypeSpecs.Type.MimeClass,
+    typeName: String,
+) : Context<MimeTypeSpecs> {
     private val mimeTypeSpecsBuilder = MimeTypeSpecs.Builder()
 
     init {
