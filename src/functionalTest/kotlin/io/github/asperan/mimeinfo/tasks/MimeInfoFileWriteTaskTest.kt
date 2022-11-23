@@ -12,14 +12,14 @@ class MimeInfoFileWriteTaskTest : StringSpec({
     val tempFolder = createTempDirectory()
 
     fun getProjectDir() = tempFolder
-    fun getBuildFile() = getProjectDir().resolve("build.gradle")
+    fun getBuildFile() = getProjectDir().resolve("build.gradle.kts")
 
     "A simple MimeInfo is constructed" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
         getBuildFile().writeText(
             """
             plugins {
-                id('io.github.asperan.mimeinfo-gradle-plugin')
+                id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             
             mimeinfos {
@@ -55,7 +55,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
             import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
             
             plugins {
-                id('io.github.asperan.mimeinfo-gradle-plugin')
+                id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             
             mimeinfos {
