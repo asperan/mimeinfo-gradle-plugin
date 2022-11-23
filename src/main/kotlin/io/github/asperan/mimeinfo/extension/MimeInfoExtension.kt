@@ -32,6 +32,6 @@ open class MimeInfoExtension {
      * @param configuration The configuration to be called on the MimeInfo context.
      */
     fun mimeinfo(fileName: String, configuration: MimeInfoContext.() -> Unit) = MimeInfoContext()
-        .also { it.configuration() }
+        .apply { configuration() }
         .let { mimeInfoFiles = mimeInfoFiles + (File(fileName) to it.build()) }
 }

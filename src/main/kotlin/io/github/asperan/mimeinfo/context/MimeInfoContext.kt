@@ -21,7 +21,7 @@ class MimeInfoContext : Context<MimeInfoSpecs> {
         typeName: String,
         configuration: MimeTypeContext.() -> Unit,
     ): Unit = MimeTypeContext(typeClass, typeName)
-            .also { it.configuration() }
+            .apply { configuration() }
             .let { mimeInfoSpecsBuilder.addMimeType(it.build()) }
 
     override fun build(): MimeInfoSpecs = mimeInfoSpecsBuilder.build()
