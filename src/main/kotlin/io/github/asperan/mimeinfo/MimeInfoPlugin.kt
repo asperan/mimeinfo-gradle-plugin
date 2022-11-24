@@ -11,8 +11,8 @@ package io.github.asperan.mimeinfo
 import io.github.asperan.mimeinfo.extension.MimeInfoExtension
 import io.github.asperan.mimeinfo.task.CheckMimeCommandsTask
 import io.github.asperan.mimeinfo.task.IconInstallTask
-import io.github.asperan.mimeinfo.task.MimeInfoFileWriteTask
 import io.github.asperan.mimeinfo.task.MimeDatabaseUpdateTask
+import io.github.asperan.mimeinfo.task.MimeInfoFileWriteTask
 import io.github.asperan.mimeinfo.task.MimeInfoInstallTask
 import io.github.asperan.mimeinfo.task.SystemCheckTask
 import org.gradle.api.DefaultTask
