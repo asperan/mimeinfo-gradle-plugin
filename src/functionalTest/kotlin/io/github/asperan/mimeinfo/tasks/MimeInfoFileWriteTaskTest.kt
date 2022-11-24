@@ -97,6 +97,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
         getBuildFile().writeText(
             """
             import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+            import io.github.asperan.mimeinfo.mime.Match
             
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
@@ -108,6 +109,10 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                         comment("My custom text type")
                         glob("*.cstxt")
                         globDeleteAll = true
+                        magicDeleteAll = true
+                        magic {
+                            match(Match.Type.STRING, Match.Offset(0u), "0x0000")
+                        }
                     }
                 }
             }
@@ -134,6 +139,10 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                     </comment>
                     <glob-deleteall />
                     <glob pattern="*.cstxt"/>
+                    <magic-deleteall />
+                    <magic priority="50">
+                        <match type="string" offset="0" value="0x0000"/>
+                    </magic>
                 </mime-type>
             </mime-info>
         """.trimIndent().replace("    ", "\t")
