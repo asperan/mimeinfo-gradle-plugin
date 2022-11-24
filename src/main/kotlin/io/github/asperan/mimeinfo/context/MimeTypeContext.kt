@@ -7,6 +7,7 @@ import io.github.asperan.mimeinfo.mime.ExpandedAcronym
 import io.github.asperan.mimeinfo.mime.Glob
 import io.github.asperan.mimeinfo.mime.Icon
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+import io.github.asperan.mimeinfo.mime.RootXml
 import io.github.asperan.mimeinfo.mime.SubClassOf
 import io.github.asperan.mimeinfo.utility.asUnit
 
@@ -106,6 +107,15 @@ class MimeTypeContext(
      * @param name The name of the generic icon.
      */
     fun genericIcon(name: String) = mimeTypeSpecsBuilder.setGenericIcon(Icon(name)).asUnit
+
+    /**
+     * Set the root XML for the mimetype.
+     *
+     * @param namespaceUri The namespace URI of the root XML.
+     * @param localName The localname of the root XML.
+     */
+    fun rootXml(namespaceUri: String, localName: String) =
+        mimeTypeSpecsBuilder.setRootXml(RootXml(namespaceUri, localName)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
