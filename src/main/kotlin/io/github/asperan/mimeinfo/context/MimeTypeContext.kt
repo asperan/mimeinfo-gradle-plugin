@@ -5,6 +5,7 @@ import io.github.asperan.mimeinfo.mime.Alias
 import io.github.asperan.mimeinfo.mime.Comment
 import io.github.asperan.mimeinfo.mime.ExpandedAcronym
 import io.github.asperan.mimeinfo.mime.Glob
+import io.github.asperan.mimeinfo.mime.Icon
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
 import io.github.asperan.mimeinfo.mime.SubClassOf
 import io.github.asperan.mimeinfo.utility.asUnit
@@ -91,6 +92,13 @@ class MimeTypeContext(
      */
     fun expandedAcronym(value: String, xmlLang: String? = null) =
         mimeTypeSpecsBuilder.addExpandedAcronym(ExpandedAcronym(value, xmlLang)).asUnit
+
+    /**
+     * Set the icon for the mimetype.
+     *
+     * @param name The name of the icon.
+     */
+    fun icon(name: String) = mimeTypeSpecsBuilder.setIcon(Icon(name)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }

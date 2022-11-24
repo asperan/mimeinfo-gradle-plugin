@@ -117,6 +117,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                         subclassOf("text/plain")
                         acronym("CSTXT")
                         expandedAcronym("Custom Text")
+                        icon("my-custom-icon")
                     }
                 }
             }
@@ -149,6 +150,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                     </expanded-acronym>
                     <sub-class-of type="text/plain"/>
                     <alias type="text/plain"/>
+                    <icon name="my-custom-icon"/>
                     <glob-deleteall />
                     <glob pattern="*.cstxt"/>
                     <magic-deleteall />
