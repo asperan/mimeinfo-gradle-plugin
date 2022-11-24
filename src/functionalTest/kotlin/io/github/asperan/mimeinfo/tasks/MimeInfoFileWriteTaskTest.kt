@@ -116,6 +116,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                         alias("text/plain")
                         subclassOf("text/plain")
                         acronym("CSTXT")
+                        expandedAcronym("Custom Text")
                     }
                 }
             }
@@ -143,6 +144,9 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                     <acronym >
                         CSTXT
                     </acronym>
+                    <expanded-acronym >
+                        Custom Text
+                    </expanded-acronym>
                     <sub-class-of type="text/plain"/>
                     <alias type="text/plain"/>
                     <glob-deleteall />

@@ -3,6 +3,7 @@ package io.github.asperan.mimeinfo.context
 import io.github.asperan.mimeinfo.mime.Acronym
 import io.github.asperan.mimeinfo.mime.Alias
 import io.github.asperan.mimeinfo.mime.Comment
+import io.github.asperan.mimeinfo.mime.ExpandedAcronym
 import io.github.asperan.mimeinfo.mime.Glob
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
 import io.github.asperan.mimeinfo.mime.SubClassOf
@@ -81,6 +82,15 @@ class MimeTypeContext(
      */
     fun acronym(value: String, xmlLang: String? = null) =
         mimeTypeSpecsBuilder.addAcronym(Acronym(value, xmlLang)).asUnit
+
+    /**
+     * Add an expanded acronym to the mimetype.
+     *
+     * @param value The value of the expanded acronym.
+     * @param xmlLang The xml language specification.
+     */
+    fun expandedAcronym(value: String, xmlLang: String? = null) =
+        mimeTypeSpecsBuilder.addExpandedAcronym(ExpandedAcronym(value, xmlLang)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
