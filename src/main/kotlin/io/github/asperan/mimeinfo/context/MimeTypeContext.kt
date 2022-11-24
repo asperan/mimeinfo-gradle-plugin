@@ -1,5 +1,6 @@
 package io.github.asperan.mimeinfo.context
 
+import io.github.asperan.mimeinfo.mime.Acronym
 import io.github.asperan.mimeinfo.mime.Alias
 import io.github.asperan.mimeinfo.mime.Comment
 import io.github.asperan.mimeinfo.mime.Glob
@@ -71,6 +72,15 @@ class MimeTypeContext(
      * @param type The parent type.
      */
     fun subclassOf(type: String) = mimeTypeSpecsBuilder.addSuperClass(SubClassOf(type)).asUnit
+
+    /**
+     * Add an acronym to the mimetype.
+     *
+     * @param value The value of the acronym.
+     * @param xmlLang The xml language specification.
+     */
+    fun acronym(value: String, xmlLang: String? = null) =
+        mimeTypeSpecsBuilder.addAcronym(Acronym(value, xmlLang)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
