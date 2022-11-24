@@ -118,7 +118,6 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                         acronym("CSTXT")
                         expandedAcronym("Custom Text")
                         icon("my-custom-icon")
-                        genericIcon("my-generic-icon")
                         rootXml("/path/to/somewhere", "xml-localname")
                     }
                 }
@@ -153,8 +152,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                     <sub-class-of type="text/plain"/>
                     <alias type="text/plain"/>
                     <icon name="my-custom-icon"/>
-                    <generic-icon name="my-generic-icon"/>
-                    <root-xml namespaceURI="/path/to/somewhere" localname="xml-localname"/>
+                    <root-XML namespaceURI="/path/to/somewhere" localname="xml-localname"/>
                     <glob-deleteall />
                     <glob pattern="*.cstxt"/>
                     <magic-deleteall />
