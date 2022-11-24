@@ -100,5 +100,12 @@ class MimeTypeContext(
      */
     fun icon(name: String) = mimeTypeSpecsBuilder.setIcon(Icon(name)).asUnit
 
+    /**
+     * Set the generic icon for the mimetype.
+     *
+     * @param name The name of the generic icon.
+     */
+    fun genericIcon(name: String) = mimeTypeSpecsBuilder.setGenericIcon(Icon(name)).asUnit
+
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
