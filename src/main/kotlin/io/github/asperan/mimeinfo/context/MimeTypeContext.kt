@@ -2,6 +2,7 @@ package io.github.asperan.mimeinfo.context
 
 import io.github.asperan.mimeinfo.mime.Glob
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+import io.github.asperan.mimeinfo.utility.asUnit
 
 /**
  * The context of MimeTypes.
@@ -22,7 +23,7 @@ class MimeTypeContext(
     /**
      * Whether to add the "glob delete all" element to the mime type.
      */
-    var globDeleteAll: Boolean = false; set(value) = Unit.also { mimeTypeSpecsBuilder.setGlobDeleteAll(value) }
+    var globDeleteAll: Boolean = false; set(value) = mimeTypeSpecsBuilder.setGlobDeleteAll(value).asUnit
 
     /**
      * Add a glob object to the MimeType.
@@ -30,8 +31,7 @@ class MimeTypeContext(
      * @param pattern The pattern of the glob.
      * @param weight The weight of the glob. Defaults to 50, also if the weight is null.
      */
-    fun glob(pattern: String, weight: UByte? = null): Unit =
-        Unit.also { mimeTypeSpecsBuilder.addGlob(Glob(pattern, weight)) }
+    fun glob(pattern: String, weight: UByte? = null): Unit = mimeTypeSpecsBuilder.addGlob(Glob(pattern, weight)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
