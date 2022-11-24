@@ -1,5 +1,6 @@
 package io.github.asperan.mimeinfo.context
 
+import io.github.asperan.mimeinfo.mime.Comment
 import io.github.asperan.mimeinfo.mime.Glob
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
 import io.github.asperan.mimeinfo.utility.asUnit
@@ -32,6 +33,15 @@ class MimeTypeContext(
      * @param weight The weight of the glob. Defaults to 50, also if the weight is null.
      */
     fun glob(pattern: String, weight: UByte? = null): Unit = mimeTypeSpecsBuilder.addGlob(Glob(pattern, weight)).asUnit
+
+    /**
+     * Add a comment element to the MimeType.
+     *
+     * @param value The comment.
+     * @param xmlLang The xml language specification.
+     */
+    fun comment(value: String, xmlLang: String? = null) =
+        mimeTypeSpecsBuilder.addComment(Comment(value, xmlLang)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
