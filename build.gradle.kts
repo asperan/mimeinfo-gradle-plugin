@@ -35,6 +35,11 @@ dependencies {
     testImplementation(libs.bundles.kotest)
 }
 
+detekt {
+    buildUponDefaultConfig = true
+    config.from("detekt-config.yaml")
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     testLogging {
