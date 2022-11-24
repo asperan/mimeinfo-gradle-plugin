@@ -1,5 +1,6 @@
 package io.github.asperan.mimeinfo.context
 
+import io.github.asperan.mimeinfo.mime.Alias
 import io.github.asperan.mimeinfo.mime.Comment
 import io.github.asperan.mimeinfo.mime.Glob
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
@@ -55,6 +56,13 @@ class MimeTypeContext(
     fun magic(configuration: MimeMagicContext.() -> Unit) = MimeMagicContext()
         .apply { configuration() }
         .let { mimeTypeSpecsBuilder.addMagic(it.build()) }
+
+    /**
+     * Add an alias to the mimetype.
+     *
+     * @param type the type alias.
+     */
+    fun alias(type: String) = mimeTypeSpecsBuilder.addAlias(Alias(type)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }

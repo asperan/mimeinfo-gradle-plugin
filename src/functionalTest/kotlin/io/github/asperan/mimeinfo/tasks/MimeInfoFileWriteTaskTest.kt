@@ -113,6 +113,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                         magic {
                             match(Match.Type.STRING, Match.Offset(0u), "0x0000")
                         }
+                        alias("text/plain")
                     }
                 }
             }
@@ -137,6 +138,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                     <comment >
                         My custom text type
                     </comment>
+                    <alias type="text/plain"/>
                     <glob-deleteall />
                     <glob pattern="*.cstxt"/>
                     <magic-deleteall />
