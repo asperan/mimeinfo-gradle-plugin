@@ -114,6 +114,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                             match(Match.Type.STRING, Match.Offset(0u), "0x0000")
                         }
                         alias("text/plain")
+                        subclassOf("text/plain")
                     }
                 }
             }
@@ -138,6 +139,7 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                     <comment >
                         My custom text type
                     </comment>
+                    <sub-class-of type="text/plain"/>
                     <alias type="text/plain"/>
                     <glob-deleteall />
                     <glob pattern="*.cstxt"/>

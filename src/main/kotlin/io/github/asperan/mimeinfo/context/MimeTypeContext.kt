@@ -4,6 +4,7 @@ import io.github.asperan.mimeinfo.mime.Alias
 import io.github.asperan.mimeinfo.mime.Comment
 import io.github.asperan.mimeinfo.mime.Glob
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+import io.github.asperan.mimeinfo.mime.SubClassOf
 import io.github.asperan.mimeinfo.utility.asUnit
 
 /**
@@ -63,6 +64,13 @@ class MimeTypeContext(
      * @param type the type alias.
      */
     fun alias(type: String) = mimeTypeSpecsBuilder.addAlias(Alias(type)).asUnit
+
+    /**
+     * Add a super class to the mimetype.
+     *
+     * @param type The parent type.
+     */
+    fun subclassOf(type: String) = mimeTypeSpecsBuilder.addSuperClass(SubClassOf(type)).asUnit
 
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
