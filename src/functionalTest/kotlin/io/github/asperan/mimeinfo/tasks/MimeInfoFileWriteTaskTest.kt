@@ -83,11 +83,12 @@ class MimeInfoFileWriteTaskTest : StringSpec({
         val expectedText = """
             <?xml version="1.0"?>
             <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-                <mime-type>
-                
+                <mime-type type="text/custom-text">
+                    <glob-deleteall />
+                    <glob pattern="*.cstxt"/>
                 </mime-type>
             </mime-info>
-        """.trimIndent()
+        """.trimIndent().replace("    ", "\t")
         mimeInfoFileText shouldBe expectedText
     }
 })
