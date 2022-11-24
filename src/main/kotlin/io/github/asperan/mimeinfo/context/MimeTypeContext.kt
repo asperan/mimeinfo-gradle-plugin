@@ -43,5 +43,18 @@ class MimeTypeContext(
     fun comment(value: String, xmlLang: String? = null) =
         mimeTypeSpecsBuilder.addComment(Comment(value, xmlLang)).asUnit
 
+    /**
+     * Whether to add the "magic delete all" to the mime type.
+     */
+    var magicDeleteAll: Boolean = false; set(value) = mimeTypeSpecsBuilder.setMagicDeleteAll(value).asUnit
+
+    /**
+     * Add a magic element to the MimeType.
+     * @param configuration The configuration of the Magic element.
+     */
+    fun magic(configuration: MimeMagicContext.() -> Unit) = MimeMagicContext()
+        .apply { configuration() }
+        .let { mimeTypeSpecsBuilder.addMagic(it.build()) }
+
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
