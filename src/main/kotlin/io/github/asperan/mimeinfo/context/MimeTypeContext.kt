@@ -117,5 +117,14 @@ class MimeTypeContext(
     fun rootXml(namespaceUri: String, localName: String) =
         mimeTypeSpecsBuilder.setRootXml(RootXml(namespaceUri, localName)).asUnit
 
+    /**
+     * Add a treemagic to the mimetype.
+     *
+     * @param configuration The configuration of the tree magic.
+     */
+    fun treemagic(configuration: MimeTreeMagicContext.() -> Unit) = MimeTreeMagicContext()
+        .apply { configuration() }
+        .let { mimeTypeSpecsBuilder.addTreeMagic(it.build()) }
+
     override fun build(): MimeTypeSpecs = mimeTypeSpecsBuilder.build()
 }
