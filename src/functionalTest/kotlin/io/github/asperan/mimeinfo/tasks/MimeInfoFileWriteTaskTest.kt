@@ -96,9 +96,6 @@ class MimeInfoFileWriteTaskTest : StringSpec({
         val mimeInfoFileName = "./sample-mimeinfo.xml"
         getBuildFile().writeText(
             """
-            import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
-            import io.github.asperan.mimeinfo.mime.Match
-            
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
@@ -119,6 +116,14 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                         expandedAcronym("Custom Text")
                         icon("my-custom-icon")
                         rootXml("/path/to/somewhere", "xml-localname")
+                        treemagic {
+                            treematch("/first/path") {
+                                matchCase = true
+                                treematch("/second/path") {
+                                
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -127,10 +132,11 @@ class MimeInfoFileWriteTaskTest : StringSpec({
 
         // Run the build
         val runner = GradleRunner.create()
-        runner.forwardOutput()
-        runner.withPluginClasspath()
-        runner.withArguments("writeMimeInfoFiles")
-        runner.withProjectDir(getProjectDir().toFile())
+            .forwardOutput()
+            .withDebug(true)
+            .withPluginClasspath()
+            .withArguments("writeMimeInfoFiles")
+            .withProjectDir(getProjectDir().toFile())
         val result = runner.build()
 
         // Verify the result
@@ -159,6 +165,11 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                     <magic priority="50">
                         <match type="string" offset="0" value="0x0000"/>
                     </magic>
+                    <treemagic priority="50">
+                        <treematch path="/first/path" match-case="true">
+
+                        </treematch>
+                    </treemagic>
                 </mime-type>
             </mime-info>
         """.trimIndent().replace("    ", "\t")
