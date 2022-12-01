@@ -192,4 +192,58 @@ class MimeInfoFileWriteTaskTest : StringSpec({
         """.trimIndent().replace("    ", "\t")
         mimeInfoFileText shouldBe expectedText
     }
+
+    "Creating a TreeMatch inside a TreeMatch should fail" {
+        val mimeInfoFileName = "./sample-mimeinfo.xml"
+        getSettingsFile().writeText(
+            """
+            plugins {
+                id("io.github.asperan.mimeinfo-gradle-plugin")
+            }
+            """.trimIndent()
+        )
+        getBuildFile().writeText(
+            """
+            import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+            import io.github.asperan.mimeinfo.mime.Match
+            mimeinfos {
+                mimeinfo("$mimeInfoFileName") {
+                    mimetype(MimeTypeSpecs.Type.MimeClass.TEXT, "custom-text") {
+                        comment("My custom text type")
+                        glob("*.cstxt")
+                        globDeleteAll = true
+                        magicDeleteAll = true
+                        magic {
+                            match(Match.Type.STRING, Match.Offset(0u), "0x0000")
+                        }
+                        alias("text/plain")
+                        subclassOf("text/plain")
+                        acronym("CSTXT")
+                        expandedAcronym("Custom Text")
+                        icon("my-custom-icon")
+                        rootXml("/path/to/somewhere", "xml-localname")
+                        treemagic {
+                            treematch("/first/path") {
+                                matchCase = true
+                                treematch("/second/path") {
+                                
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            """.trimIndent()
+        )
+
+        // Run the build
+        val runner = GradleRunner.create()
+            .forwardOutput()
+            .withPluginClasspath()
+            .withArguments("writeMimeInfoFiles")
+            .withProjectDir(getProjectDir().toFile())
+        shouldThrow<UnexpectedBuildFailure> {
+            runner.build()
+        }
+    }
 })
