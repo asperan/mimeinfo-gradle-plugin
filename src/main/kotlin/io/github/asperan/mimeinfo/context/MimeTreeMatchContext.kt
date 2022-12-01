@@ -64,6 +64,9 @@ class MimeTreeMatchContext(
         treeMatchBuilder.setMimetype(value)
     }
 
+    /*
+    This method is disabled because the gradle fails with a StackOverflowError with no message.
+    As long as the error is not resolved, the nesting of TreeMatches is not supported by the dsl.
     /**
      * Add a treematch child.
      *
@@ -73,6 +76,6 @@ class MimeTreeMatchContext(
     fun treematch(path: String, configuration: MimeTreeMatchContext.() -> Unit): Unit = MimeTreeMatchContext(path)
         .apply { configuration() }
         .let { treeMatchBuilder.addTreeMatch(it.build()) }
-
+    */
     override fun build(): TreeMatch = treeMatchBuilder.build()
 }
