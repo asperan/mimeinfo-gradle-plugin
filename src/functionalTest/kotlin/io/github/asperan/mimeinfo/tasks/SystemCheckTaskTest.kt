@@ -21,13 +21,14 @@ class SystemCheckTaskTest : StringSpec({
     val tempFolder = createTempDirectory()
 
     fun getProjectDir() = tempFolder
-    fun getBuildFile() = getProjectDir().resolve("build.gradle")
+    fun getBuildFile() = getProjectDir().resolve("build.gradle.kts")
+    fun getSettingsFile() = getProjectDir().resolve("settings.gradle.kts")
 
     "System check on Linux is passed" {
-        getBuildFile().writeText(
+        getSettingsFile().writeText(
             """
             plugins {
-                id('io.github.asperan.mimeinfo-gradle-plugin')
+                id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             if (System.getProperty("os.name") != "Linux") {
                 System.setProperty("os.name", "Linux")
@@ -48,10 +49,10 @@ class SystemCheckTaskTest : StringSpec({
     }
 
     "System check on another system fails" {
-        getBuildFile().writeText(
+        getSettingsFile().writeText(
             """
             plugins {
-                id('io.github.asperan.mimeinfo-gradle-plugin')
+                id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             if (System.getProperty("os.name") == "Linux") {
                 System.setProperty("os.name", "AbsolutelyNotLinux")
