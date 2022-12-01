@@ -18,21 +18,31 @@ import io.github.asperan.mimeinfo.task.SystemCheckTask
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.repositories
 
 /**
  * A plugin to create and install MIME types in the Linux shared database.
  */
-open class MimeInfoPlugin : Plugin<Project> {
-    override fun apply(project: Project) {
-        with(project) {
-            createExtension()
-            registerPluginTasks()
+open class MimeInfoPlugin : Plugin<Settings> {
+    private val mimeinfoDependency = "io.github.asperan:mimeinfo-core:1.1.0"
+
+    override fun apply(settings: Settings) = settings.gradle.rootProject {
+        it.addDependencies()
+        it.createExtension()
+        it.registerPluginTasks()
+    }
+
+    private fun Project.addDependencies() = with(buildscript) {
+        repositories {
+            mavenCentral()
         }
+        dependencies.add("classpath", mimeinfoDependency)
     }
 
     private fun Project.createExtension() {
-        val extension = extensions.create("mimeinfos", MimeInfoExtension::class.java)
+        extensions.create("mimeinfos", MimeInfoExtension::class.java)
     }
 
     private fun Project.registerPluginTasks() {
