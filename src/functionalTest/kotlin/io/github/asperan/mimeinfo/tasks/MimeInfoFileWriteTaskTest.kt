@@ -8,11 +8,13 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 package io.github.asperan.mimeinfo.tasks
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
+import org.gradle.testkit.runner.UnexpectedBuildFailure
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.writeText
 
@@ -21,15 +23,19 @@ class MimeInfoFileWriteTaskTest : StringSpec({
 
     fun getProjectDir() = tempFolder
     fun getBuildFile() = getProjectDir().resolve("build.gradle.kts")
+    fun getSettingsFile() = getProjectDir().resolve("settings.gradle.kts")
 
     "A simple MimeInfo is constructed" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
-        getBuildFile().writeText(
+        getSettingsFile().writeText(
             """
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
-            
+            """.trimIndent()
+        )
+        getBuildFile().writeText(
+            """    
             mimeinfos {
                 mimeinfo("$mimeInfoFileName") { }
             }
@@ -58,14 +64,16 @@ class MimeInfoFileWriteTaskTest : StringSpec({
 
     "A MimeInfo with a MimeType is constructed" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
-        getBuildFile().writeText(
+        getSettingsFile().writeText(
             """
-            import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
-            
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
-            
+            """.trimIndent()
+        )
+        getBuildFile().writeText(
+            """
+            import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
             mimeinfos {
                 mimeinfo("$mimeInfoFileName") {
                     mimetype(MimeTypeSpecs.Type.MimeClass.TEXT, "custom-text") {
@@ -102,12 +110,17 @@ class MimeInfoFileWriteTaskTest : StringSpec({
 
     "Full mimeinfo file generation test" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
-        getBuildFile().writeText(
+        getSettingsFile().writeText(
             """
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
-            
+            """.trimIndent()
+        )
+        getBuildFile().writeText(
+            """
+            import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+            import io.github.asperan.mimeinfo.mime.Match
             mimeinfos {
                 mimeinfo("$mimeInfoFileName") {
                     mimetype(MimeTypeSpecs.Type.MimeClass.TEXT, "custom-text") {
@@ -127,9 +140,6 @@ class MimeInfoFileWriteTaskTest : StringSpec({
                         treemagic {
                             treematch("/first/path") {
                                 matchCase = true
-                                treematch("/second/path") {
-                                
-                                }
                             }
                         }
                     }
@@ -141,7 +151,6 @@ class MimeInfoFileWriteTaskTest : StringSpec({
         // Run the build
         val runner = GradleRunner.create()
             .forwardOutput()
-            .withDebug(true)
             .withPluginClasspath()
             .withArguments("writeMimeInfoFiles")
             .withProjectDir(getProjectDir().toFile())
