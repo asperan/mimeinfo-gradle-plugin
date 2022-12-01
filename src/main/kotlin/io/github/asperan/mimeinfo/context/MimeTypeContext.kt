@@ -17,6 +17,7 @@ import io.github.asperan.mimeinfo.mime.Icon
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
 import io.github.asperan.mimeinfo.mime.RootXml
 import io.github.asperan.mimeinfo.mime.SubClassOf
+import io.github.asperan.mimeinfo.utility.MimeElementContextMarker
 import io.github.asperan.mimeinfo.utility.asUnit
 
 /**
@@ -25,6 +26,7 @@ import io.github.asperan.mimeinfo.utility.asUnit
  * @param typeClass The class of the Mime type.
  * @param typeName The name of the type.
  */
+@MimeElementContextMarker
 class MimeTypeContext(
     typeClass: MimeTypeSpecs.Type.MimeClass,
     typeName: String,

@@ -10,11 +10,13 @@ package io.github.asperan.mimeinfo.context
 
 import io.github.asperan.mimeinfo.mime.Magic
 import io.github.asperan.mimeinfo.mime.Match
+import io.github.asperan.mimeinfo.utility.MimeElementContextMarker
 import io.github.asperan.mimeinfo.utility.asUnit
 
 /**
  * The context of Magic elements.
  */
+@MimeElementContextMarker
 class MimeMagicContext : Context<Magic> {
     private val magicBuilder = Magic.Builder()
 

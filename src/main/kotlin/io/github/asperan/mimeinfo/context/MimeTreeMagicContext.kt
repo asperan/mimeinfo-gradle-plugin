@@ -9,10 +9,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 package io.github.asperan.mimeinfo.context
 
 import io.github.asperan.mimeinfo.mime.TreeMagic
+import io.github.asperan.mimeinfo.utility.MimeElementContextMarker
 
 /**
  * The context for TreeMagic elements.
  */
+@MimeElementContextMarker
 class MimeTreeMagicContext : Context<TreeMagic> {
     private val treeMagicBuilder = TreeMagic.Builder()
 

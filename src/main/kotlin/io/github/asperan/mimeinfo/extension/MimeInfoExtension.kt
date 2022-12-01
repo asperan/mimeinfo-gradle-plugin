@@ -10,11 +10,13 @@ package io.github.asperan.mimeinfo.extension
 
 import io.github.asperan.mimeinfo.context.MimeInfoContext
 import io.github.asperan.mimeinfo.mime.MimeInfoSpecs
+import io.github.asperan.mimeinfo.utility.MimeElementContextMarker
 import java.io.File
 
 /**
  * MimeInfo plugin extension.
  */
+@MimeElementContextMarker
 open class MimeInfoExtension {
     /**
      * The MimeInfoSpecs with the given file name.

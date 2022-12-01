@@ -10,10 +10,12 @@ package io.github.asperan.mimeinfo.context
 
 import io.github.asperan.mimeinfo.mime.MimeInfoSpecs
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+import io.github.asperan.mimeinfo.utility.MimeElementContextMarker
 
 /**
  *  Class used in the extension for the MimeInfo specification.
  */
+@MimeElementContextMarker
 class MimeInfoContext : Context<MimeInfoSpecs> {
     private val mimeInfoSpecsBuilder = MimeInfoSpecs.Builder()
 
