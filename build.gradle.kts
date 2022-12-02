@@ -69,6 +69,8 @@ configurations["functionalTestImplementation"].extendsFrom(configurations["testI
 
 // Add a task to run the functional tests
 val functionalTest by tasks.registering(Test::class) {
+    group = "verification"
+    description = "Run functional tests"
     testClassesDirs = functionalTestSourceSet.output.classesDirs
     classpath = functionalTestSourceSet.runtimeClasspath
 }
