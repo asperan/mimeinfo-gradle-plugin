@@ -9,32 +9,25 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 package io.github.asperan.mimeinfo.tasks
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
-import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.gradle.testkit.runner.UnexpectedBuildFailure
-import kotlin.io.path.createTempDirectory
 import kotlin.io.path.writeText
 
-class MimeInfoFileWriteTaskTest : StringSpec({
-    val tempFolder = createTempDirectory()
-
-    fun getProjectDir() = tempFolder
-    fun getBuildFile() = getProjectDir().resolve("build.gradle.kts")
-    fun getSettingsFile() = getProjectDir().resolve("settings.gradle.kts")
+class MimeInfoFileWriteTaskTest : TaskFunctionalTest({
+    val taskName = "writeMimeInfoFiles"
 
     "A simple MimeInfo is constructed" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
-        getSettingsFile().writeText(
+        settingsFile.writeText(
             """
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             """.trimIndent()
         )
-        getBuildFile().writeText(
+        buildFile.writeText(
             """    
             mimeinfos {
                 mimeinfo("$mimeInfoFileName") { }
@@ -42,17 +35,11 @@ class MimeInfoFileWriteTaskTest : StringSpec({
             """.trimIndent()
         )
 
-        // Run the build
-        val runner = GradleRunner.create()
-        runner.forwardOutput()
-        runner.withPluginClasspath()
-        runner.withArguments("writeMimeInfoFiles")
-        runner.withProjectDir(getProjectDir().toFile())
-        val result = runner.build()
+        val result = runTask(taskName)
 
         // Verify the result
         result.tasks.all { it.outcome == TaskOutcome.SUCCESS }.shouldBeTrue()
-        val mimeInfoFileText = getProjectDir().resolve(mimeInfoFileName).toFile().readText()
+        val mimeInfoFileText = projectDir.resolve(mimeInfoFileName).toFile().readText()
         val expectedText = """
             <?xml version="1.0"?>
             <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
@@ -64,14 +51,14 @@ class MimeInfoFileWriteTaskTest : StringSpec({
 
     "A MimeInfo with a MimeType is constructed" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
-        getSettingsFile().writeText(
+        settingsFile.writeText(
             """
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             """.trimIndent()
         )
-        getBuildFile().writeText(
+        buildFile.writeText(
             """
             import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
             mimeinfos {
@@ -85,17 +72,11 @@ class MimeInfoFileWriteTaskTest : StringSpec({
             """.trimIndent()
         )
 
-        // Run the build
-        val runner = GradleRunner.create()
-        runner.forwardOutput()
-        runner.withPluginClasspath()
-        runner.withArguments("writeMimeInfoFiles")
-        runner.withProjectDir(getProjectDir().toFile())
-        val result = runner.build()
+        val result = runTask(taskName)
 
         // Verify the result
         result.tasks.all { it.outcome == TaskOutcome.SUCCESS }.shouldBeTrue()
-        val mimeInfoFileText = getProjectDir().resolve(mimeInfoFileName).toFile().readText()
+        val mimeInfoFileText = projectDir.resolve(mimeInfoFileName).toFile().readText()
         val expectedText = """
             <?xml version="1.0"?>
             <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
@@ -110,14 +91,14 @@ class MimeInfoFileWriteTaskTest : StringSpec({
 
     "Full mimeinfo file generation test" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
-        getSettingsFile().writeText(
+        settingsFile.writeText(
             """
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             """.trimIndent()
         )
-        getBuildFile().writeText(
+        buildFile.writeText(
             """
             import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
             import io.github.asperan.mimeinfo.mime.Match
@@ -148,17 +129,11 @@ class MimeInfoFileWriteTaskTest : StringSpec({
             """.trimIndent()
         )
 
-        // Run the build
-        val runner = GradleRunner.create()
-            .forwardOutput()
-            .withPluginClasspath()
-            .withArguments("writeMimeInfoFiles")
-            .withProjectDir(getProjectDir().toFile())
-        val result = runner.build()
+        val result = runTask(taskName)
 
         // Verify the result
         result.tasks.all { it.outcome == TaskOutcome.SUCCESS }.shouldBeTrue()
-        val mimeInfoFileText = getProjectDir().resolve(mimeInfoFileName).toFile().readText()
+        val mimeInfoFileText = projectDir.resolve(mimeInfoFileName).toFile().readText()
         val expectedText = """
             <?xml version="1.0"?>
             <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
@@ -195,14 +170,14 @@ class MimeInfoFileWriteTaskTest : StringSpec({
 
     "Creating a TreeMatch inside a TreeMatch should fail" {
         val mimeInfoFileName = "./sample-mimeinfo.xml"
-        getSettingsFile().writeText(
+        settingsFile.writeText(
             """
             plugins {
                 id("io.github.asperan.mimeinfo-gradle-plugin")
             }
             """.trimIndent()
         )
-        getBuildFile().writeText(
+        buildFile.writeText(
             """
             import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
             import io.github.asperan.mimeinfo.mime.Match
@@ -236,14 +211,8 @@ class MimeInfoFileWriteTaskTest : StringSpec({
             """.trimIndent()
         )
 
-        // Run the build
-        val runner = GradleRunner.create()
-            .forwardOutput()
-            .withPluginClasspath()
-            .withArguments("writeMimeInfoFiles")
-            .withProjectDir(getProjectDir().toFile())
         shouldThrow<UnexpectedBuildFailure> {
-            runner.build()
+            runTask(taskName)
         }
     }
 })
