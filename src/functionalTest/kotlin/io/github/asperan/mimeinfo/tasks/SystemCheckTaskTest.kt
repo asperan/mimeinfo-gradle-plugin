@@ -15,6 +15,8 @@ import org.gradle.testkit.runner.UnexpectedBuildFailure
 import kotlin.io.path.writeText
 
 class SystemCheckTaskTest : TaskFunctionalTest({
+    val taskName = "checkSystemIsSupported"
+
     "System check on Linux is passed" {
         settingsFile.writeText(
             """
@@ -27,7 +29,7 @@ class SystemCheckTaskTest : TaskFunctionalTest({
             """.trimIndent()
         )
 
-        val result = runTask("checkSystemIsSupported")
+        val result = runTask(taskName)
 
         // Verify the result
         result.tasks.all { it.outcome == TaskOutcome.SUCCESS }.shouldBeTrue()
@@ -46,7 +48,7 @@ class SystemCheckTaskTest : TaskFunctionalTest({
         )
 
         shouldThrow<UnexpectedBuildFailure> {
-            runTask("checkSystemIsSupported")
+            runTask(taskName)
         }
     }
 })
