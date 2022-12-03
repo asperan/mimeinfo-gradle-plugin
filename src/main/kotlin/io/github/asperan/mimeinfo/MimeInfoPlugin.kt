@@ -43,7 +43,7 @@ open class MimeInfoPlugin : Plugin<Settings> {
     }
 
     private fun Project.createExtension() {
-        extensions.create(EXTENSION_NAME, MimeInfoExtension::class.java)
+        extensions.create(EXTENSION_NAME, MimeInfoExtension::class.java, this)
     }
 
     private fun Project.registerPluginTasks() {

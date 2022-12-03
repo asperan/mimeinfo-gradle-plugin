@@ -11,13 +11,14 @@ package io.github.asperan.mimeinfo.extension
 import io.github.asperan.mimeinfo.context.MimeInfoContext
 import io.github.asperan.mimeinfo.mime.MimeInfoSpecs
 import io.github.asperan.mimeinfo.utility.MimeElementContextMarker
+import org.gradle.api.Project
 import java.io.File
 
 /**
  * MimeInfo plugin extension.
  */
 @MimeElementContextMarker
-open class MimeInfoExtension {
+open class MimeInfoExtension(private val project: Project) {
     /**
      * The MimeInfoSpecs with the given file name.
      */
@@ -35,5 +36,5 @@ open class MimeInfoExtension {
      */
     fun mimeinfo(fileName: String, configuration: MimeInfoContext.() -> Unit) = MimeInfoContext()
         .apply { configuration() }
-        .let { mimeInfoFiles = mimeInfoFiles + (File(fileName) to it.build()) }
+        .let { mimeInfoFiles = mimeInfoFiles + (project.projectDir.resolve(fileName).normalize() to it.build()) }
 }
