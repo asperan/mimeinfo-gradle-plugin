@@ -26,7 +26,6 @@ open class MimeInfoFileWriteTask : DefaultTask() {
         (project.extensions["mimeinfos"] as MimeInfoExtension)
             .mimeInfoFiles
             .forEach { (file, mimeInfoSpecs) ->
-                    file
-                        .writeText("${XML_HEADER}\n${mimeInfoSpecs.toXmlString(indentLevel = 0u)}")
+                file.writeText("${XML_HEADER}\n${mimeInfoSpecs.toXmlString(indentLevel = 0u)}")
             }
 }
