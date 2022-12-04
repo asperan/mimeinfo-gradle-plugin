@@ -49,7 +49,7 @@ class MimeInfoInstallTaskTest : TaskFunctionalTest({
                     .waitFor()
             }
             val output = outputFile.readText()
-            output.trim() shouldBe "text/${myCustomType}"
+            output.trim() shouldBe "text/$myCustomType"
         } finally {
             withContext(Dispatchers.IO) {
                 ProcessBuilder("/bin/bash", "-c", "xdg-mime uninstall $mimeFilePath")
