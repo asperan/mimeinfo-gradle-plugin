@@ -21,7 +21,7 @@ import javax.inject.Inject
 open class MimeInfoInstallTask : DefaultTask() {
     init {
         val mimeinfoFiles = (project.extensions[EXTENSION_NAME] as MimeInfoExtension).mimeInfoFiles.keys
-        val indexes = 1 .. mimeinfoFiles.size
+        val indexes = 1..mimeinfoFiles.size
         val baseDependencies = listOf(this.dependsOn.toTypedArray())
         this.dependsOn(
             *mimeinfoFiles
