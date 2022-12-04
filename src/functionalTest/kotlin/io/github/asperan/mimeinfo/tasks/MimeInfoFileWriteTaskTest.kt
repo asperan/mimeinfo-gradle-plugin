@@ -138,15 +138,9 @@ class MimeInfoFileWriteTaskTest : TaskFunctionalTest({
             <?xml version="1.0"?>
             <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
                 <mime-type type="text/custom-text">
-                    <comment >
-                        My custom text type
-                    </comment>
-                    <acronym >
-                        CSTXT
-                    </acronym>
-                    <expanded-acronym >
-                        Custom Text
-                    </expanded-acronym>
+                    <comment >My custom text type</comment>
+                    <acronym >CSTXT</acronym>
+                    <expanded-acronym >Custom Text</expanded-acronym>
                     <sub-class-of type="text/plain"/>
                     <alias type="text/plain"/>
                     <icon name="my-custom-icon"/>
