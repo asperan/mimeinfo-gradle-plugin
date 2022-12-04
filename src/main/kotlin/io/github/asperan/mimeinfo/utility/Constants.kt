@@ -3,7 +3,7 @@ package io.github.asperan.mimeinfo.utility
 /**
  * The `mimeinfo-core` dependency name and version.
  */
-internal const val MIMEINFO_DEPENDENCY = "io.github.asperan:mimeinfo-core:1.1.0"
+internal const val MIMEINFO_DEPENDENCY = "io.github.asperan:mimeinfo-core:1.2.0"
 
 /**
  * The name of the buildscript configuration.
