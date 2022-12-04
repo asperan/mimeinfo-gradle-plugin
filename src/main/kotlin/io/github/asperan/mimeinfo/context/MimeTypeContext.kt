@@ -12,6 +12,7 @@ import io.github.asperan.mimeinfo.mime.Acronym
 import io.github.asperan.mimeinfo.mime.Alias
 import io.github.asperan.mimeinfo.mime.Comment
 import io.github.asperan.mimeinfo.mime.ExpandedAcronym
+import io.github.asperan.mimeinfo.mime.GenericIcon
 import io.github.asperan.mimeinfo.mime.Glob
 import io.github.asperan.mimeinfo.mime.Icon
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
@@ -116,7 +117,7 @@ class MimeTypeContext(
      *
      * @param name The name of the generic icon.
      */
-    fun genericIcon(name: String) = mimeTypeSpecsBuilder.setGenericIcon(Icon(name)).asUnit
+    fun genericIcon(name: String) = mimeTypeSpecsBuilder.setGenericIcon(GenericIcon(name)).asUnit
 
     /**
      * Set the root XML for the mimetype.
