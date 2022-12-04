@@ -1,11 +1,14 @@
 # mimeinfo-gradle-plugin
 This gradle plugin allows to update the Linux shared MIME type database with a dsl.
 
+For technical details, read the [Shared MIME-info database specification](https://specifications.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-latest.html).
+
 ## Unsupported features
 * Nested `TreeMatch`es
 * `Icon`s installation
 
-## Sample Usage
+## Usage
+### Basic example
 `settings.gradle.kts`:
 ```kotlin
 plugins {
@@ -18,7 +21,7 @@ plugins {
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
 mimeinfos {
     mimeinfo("./my-custom-mimetype.xml") {
-        mimetype(MimeTypeSpecs.Type.MimeClass.TEXT, "custom-text") {
+        mimetype(MimeTypeSpecs.Type.MimeClass.TEXT, "x-custom-text") {
             comment("My custom text type")
             glob("*.cstxt")
             globDeleteAll = true
@@ -27,13 +30,14 @@ mimeinfos {
 }
 ```
 
-## Example full usage
+### Example full usage
+This example just shows every piece of the configuration, it does not produce a useful MIME type.
 ```kotlin
 import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
 import io.github.asperan.mimeinfo.mime.Match
 mimeinfos {
     mimeinfo("./my-custom-mimetype.xml") {
-        mimetype(MimeTypeSpecs.Type.MimeClass.TEXT, "custom-text") {
+        mimetype(MimeTypeSpecs.Type.MimeClass.TEXT, "x-custom-text") {
             comment("My custom text type")
             glob("*.cstxt")
             globDeleteAll = true
@@ -55,6 +59,28 @@ mimeinfos {
                     }
                 }
             }
+        }
+    }
+}
+```
+
+### A more real example
+`settings.gradle.kts`:
+```kotlin
+plugins {
+    id("io.github.asperan.mimeinfo-gradle-plugin")
+}
+```
+
+`build.gradle.kts`:
+```kotlin
+import io.github.asperan.mimeinfo.mime.MimeTypeSpecs
+mimeinfos {
+    mimeinfo("./drawio-mime.xml") {
+        mimetype(MimeTypeSpecs.Type.MimeClass.APPLICATION, "x-drawio-file") {
+            comment("Drawio diagram file")
+            glob("*.drawio")
+            globDeleteAll = true
         }
     }
 }
