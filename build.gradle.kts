@@ -13,6 +13,9 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.qa)
     alias(libs.plugins.gitSemVer)
+    id("com.gradle.plugin-publish") version "1.0.0"
+    signing
+    `maven-publish`
 }
 
 group = "io.github.asperan"
@@ -55,10 +58,17 @@ tasks.withType<Test>().configureEach {
 
 gradlePlugin {
     // Define the plugin
-    val mimeInfo by plugins.creating {
-        id = "io.github.asperan.mimeinfo-gradle-plugin"
+    val mimeInfoGradlePlugin by plugins.creating {
+        id = "${project.group}.${project.name}"
+        displayName = "MimeInfo Gradle Plugin"
+        description = "Plugin to declare and install MIME types."
         implementationClass = "io.github.asperan.mimeinfo.MimeInfoPlugin"
     }
+}
+
+pluginBundle { // These settings are set for the whole plugin bundle
+    vcsUrl = "https://github.com/asperan/mimeinfo-gradle-plugin"
+    tags = listOf("mime", "mimetype", "mimeinfo", "asperan")
 }
 
 // Add a source set for the functional test suite
@@ -80,4 +90,54 @@ gradlePlugin.testSourceSets(functionalTestSourceSet)
 tasks.named<Task>("check") {
     // Run the functional tests as part of `check`
     dependsOn(functionalTest)
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    from(tasks.dokkaJavadoc.get().outputDirectory)
+    archiveClassifier.set("javadoc")
+}
+
+val sourceJar by tasks.registering(Jar::class) {
+    from(sourceSets.named("main").get().allSource)
+    archiveClassifier.set("sources")
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val mavenCentralPwd: String? by project
+            credentials {
+                username = "asperan"
+                password = mavenCentralPwd
+            }
+        }
+        publications {
+            val mimeInfoGradlePlugin by creating(MavenPublication::class) {
+                from(components["java"])
+                artifact(javadocJar)
+                artifact(sourceJar)
+                pom {
+                    name.set("MimeInfo Gradle Plugin")
+                    description.set("MimeInfo Gradle Plugin allow to create and install MIME types.")
+                    url.set("https://github.com/asperan/mimeinfo-gradle-plugin")
+                    licenses {
+                        license {
+                            name.set("MPL2.0")
+                        }
+                    }
+                    developers {
+                        developer {
+                            name.set("Alex Speranza")
+                        }
+                    }
+                    scm {
+                        url.set("git@github.com:asperan/mimeinfo-gradle-plugin.git")
+                        connection.set("git@github.com:asperan/mimeinfo-gradle-plugin.git")
+                    }
+                }
+            }
+            signing { sign(mimeInfoGradlePlugin) }
+        }
+    }
 }
