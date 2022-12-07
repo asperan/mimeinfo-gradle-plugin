@@ -67,6 +67,7 @@ gradlePlugin {
 }
 
 pluginBundle { // These settings are set for the whole plugin bundle
+    website = "https://github.com/asperan/mimeinfo-gradle-plugin"
     vcsUrl = "https://github.com/asperan/mimeinfo-gradle-plugin"
     tags = listOf("mime", "mimetype", "mimeinfo", "asperan")
 }
