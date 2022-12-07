@@ -123,8 +123,6 @@ publishing {
         publications {
             val mimeInfoGradlePlugin by creating(MavenPublication::class) {
                 from(components["java"])
-                artifact(javadocJar)
-                artifact(sourceJar)
                 pom {
                     name.set("MimeInfo Gradle Plugin")
                     description.set("MimeInfo Gradle Plugin allow to create and install MIME types.")
