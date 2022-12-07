@@ -1,4 +1,6 @@
 # mimeinfo-gradle-plugin
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.asperan/mimeinfo-gradle-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.asperan%22%20AND%20a:%22mimeinfo-gradle-plugin%22)
+
 This gradle plugin allows to update the Linux shared MIME type database with a dsl.
 
 For technical details, read the [Shared MIME-info database specification](https://specifications.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-latest.html).
